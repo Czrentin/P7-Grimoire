@@ -116,10 +116,8 @@ exports.getBestRatingBooks = (req, res, next) => {
 exports.rateBook = (req, res, next) => {
   Book.findOne({ _id: req.params.id })
     .then((book) => {
-      // Ajoutez la nouvelle note au tableau de notes du livre
       book.ratings.push({ userId: req.auth.userId, grade: req.body.rating })
 
-      // Calculer la nouvelle note moyenne du livre
       const totalRatings = book.ratings.length
       const sumRatings = book.ratings.reduce(
         (sum, rating) => sum + rating.grade,
@@ -127,10 +125,8 @@ exports.rateBook = (req, res, next) => {
       )
       const averageRating = totalRatings > 0 ? sumRatings / totalRatings : 0
 
-      // Mettez à jour la note moyenne du livre
       book.averageRating = averageRating
 
-      // Enregistrez le livre mis à jour dans la base de données
       book.save().then(() => {
         res.status(201).json(book)
       })
