@@ -116,6 +116,16 @@ exports.getBestRatingBooks = (req, res, next) => {
 exports.rateBook = (req, res, next) => {
   Book.findOne({ _id: req.params.id })
     .then((book) => {
+      // Vérifier si l'utilisateur a déjà noté le livre
+      const existingRating = book.ratings.find(
+        (rating) => rating.userId === req.auth.userId
+      )
+      if (existingRating) {
+        return res
+          .status(400)
+          .json({ error: "L'utilisateur a déjà noté ce livre." })
+      }
+
       book.ratings.push({ userId: req.auth.userId, grade: req.body.rating })
 
       const totalRatings = book.ratings.length

@@ -37,9 +37,13 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
-              expiresIn: "24h",
-            }),
+            token: jwt.sign(
+              { userId: user._id },
+              "cO09nKHaKjhgfvI9WNAZYWk8Dr!Xsp5CukYDgHWW1-OL9!yeMoi-7T/4/ugKPflj?sAQmk/8OAndQlKNclGqE2Is65N8M=AtVB4wjeCfVll7CANvr5G9snFHl!W7AeTxkjyIELHIJzzu1VWvnBBHi56N7rA9!PDnjLv!OUy7TlKPW=ExMvXyycvF=Lzy0pSMn7Ieq/NWvSsJ!6=V-qu6JcrxjGORUY9ANQnBgrEacGbd10XrzeV6h6cpp=6jc1N/",
+              {
+                expiresIn: "24h",
+              }
+            ),
           })
         })
         .catch((error) => res.status(500).json({ error }))
