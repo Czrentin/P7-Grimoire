@@ -9,8 +9,7 @@ module.exports = async (req, res, next) => {
     const originalFilePath = req.file.path
 
     const modifiedImageBuffer = await sharp(originalFilePath)
-      .resize({ height: 600 })
-      .jpeg({ quality: 90 })
+      .resize({ height: 800 })
       .toBuffer()
 
     // Supprimez l'image d'origine
